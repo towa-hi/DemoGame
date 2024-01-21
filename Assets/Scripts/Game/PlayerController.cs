@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] CharacterController characterController;
     public static PlayerInputActions input;
     [SerializeField] Vector2 movementInputDir;
+    [SerializeField] Vector3 cameraMovementDir;
     [SerializeField] Vector3 targetVelocity;
     [SerializeField] Vector3 currentVelocity;
     [SerializeField] float defaultWalkingVelocity;
@@ -65,9 +66,20 @@ public class PlayerController : MonoBehaviour
     void ApplyMovementInput()
     {
         float stopThreshold = 0.5f;
+        Camera mainCamera = Camera.main;
+        Vector3 cameraForward = mainCamera.transform.forward;
+        Vector3 cameraRight = mainCamera.transform.right;
 
-        targetVelocity.x = Mathf.Abs(movementInputDir.x) > 0 ? movementInputDir.x * defaultWalkingVelocity : Mathf.Lerp(targetVelocity.x, 0, brakingVelocity * Time.deltaTime);
-        targetVelocity.z = Mathf.Abs(movementInputDir.y) > 0 ? movementInputDir.y * defaultWalkingVelocity : Mathf.Lerp(targetVelocity.z, 0, brakingVelocity * Time.deltaTime);
+        cameraForward = cameraForward.normalized;
+        cameraRight = cameraRight.normalized;
+
+        Vector3 cameraForwardZProduct = movementInputDir.y * cameraForward;
+        Vector3 cameraRightXProduct = movementInputDir.x * cameraRight;
+
+        Vector3 cameraSpaceVector = cameraForwardZProduct + cameraRightXProduct;
+        
+        targetVelocity.x = Mathf.Abs(cameraSpaceVector.x) > 0 ? cameraSpaceVector.x * defaultWalkingVelocity : Mathf.Lerp(targetVelocity.x, 0, brakingVelocity * Time.deltaTime);
+        targetVelocity.z = Mathf.Abs(cameraSpaceVector.y) > 0 ? cameraSpaceVector.y * defaultWalkingVelocity : Mathf.Lerp(targetVelocity.z, 0, brakingVelocity * Time.deltaTime);
 
         if (Mathf.Abs(targetVelocity.x) < stopThreshold) targetVelocity.x = 0;
         if (Mathf.Abs(targetVelocity.z) < stopThreshold) targetVelocity.z = 0;
