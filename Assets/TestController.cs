@@ -22,6 +22,8 @@ public class TestController : MonoBehaviour
     [SerializeField] float maxWalkingSpeed;
     [SerializeField] float mouseSensitivity;
     [SerializeField] float ainAnimationSpeed;
+    [SerializeField] Vector3 gravityVector;
+    [SerializeField] float maxJumpHeight;
     [Header("INPUT DATA")]
     [SerializeField] Vector2 movementInputDir;
     [SerializeField] Vector2 mouseInput;
@@ -30,12 +32,12 @@ public class TestController : MonoBehaviour
     [SerializeField] float cameraHorizontalRotation = 0f;
     [SerializeField] float cameraVerticalRotation = 0f;
     [SerializeField] Vector3 intendedWalkingVector;
-    [SerializeField] Vector3 gravityVector;
+    [SerializeField] Vector3 jumpingVector;
     
     [SerializeField] bool isAiming = false;
-    
+    [SerializeField] bool isJumping = false;
     PlayerInputActions input;
-    
+    [SerializeField] Vector3 finalMovementVector;
     void Awake()
     {
         input = new PlayerInputActions();
@@ -58,12 +60,14 @@ public class TestController : MonoBehaviour
         input.PlayerControls.Aim.performed += ctx =>
         {
             isAiming = true;
-            Debug.Log("true");
         };
         input.PlayerControls.Aim.canceled += ctx =>
         {
             isAiming = false;
-            Debug.Log("false");
+        };
+        input.PlayerControls.Jump.performed += ctx =>
+        {
+            Jump();
         };
     }
 
@@ -82,6 +86,14 @@ public class TestController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    void Jump()
+    {
+        if (characterController.isGrounded)
+        {
+            isJumping = true;
+        }
+    }
+    
     void Update()
     {
         UpdateMouseInput();
@@ -89,8 +101,9 @@ public class TestController : MonoBehaviour
         UpdateWalkingAnimation();
         UpdateAimingLayer();
         UpdateMovePlayer();
-        gravityVector = new Vector3(0f, -9.8f, 0f);
-        characterController.Move((intendedWalkingVector + gravityVector) * Time.deltaTime);
+        UpdateJumping();
+        finalMovementVector = intendedWalkingVector + jumpingVector;
+        characterController.Move(finalMovementVector * Time.deltaTime);
     }
 
     void UpdateMouseInput()
@@ -141,6 +154,35 @@ public class TestController : MonoBehaviour
         Vector3 relativeDir = (forward * movementInputDir.y + right * movementInputDir.x).normalized;
         // apply the movement to the character
         intendedWalkingVector = relativeDir * defaultWalkingVelocity;
+    }
+
+    void UpdateJumping()
+    {
+        // reset vertical velocity when landing
+        if (characterController.isGrounded && jumpingVector.y < 0)
+        {
+            jumpingVector.y = 0f;
+        }
+
+        // Jump
+        if (isJumping && characterController.isGrounded)
+        {
+            jumpingVector.y = Mathf.Sqrt(maxJumpHeight * -2 * -9.8f);
+            isJumping = false;
+        }
+
+        // Apply gravity
+        if (jumpingVector.y < 0)
+        {
+            float fallMultiplier = 2.5f;
+            // why does this not work when I remove Time.deltaTime???
+            jumpingVector.y += -9.8f * fallMultiplier * Time.deltaTime;
+        }
+        else
+        {
+            // why does this not work when I remove Time.deltaTime???
+            jumpingVector.y += -9.8f  * Time.deltaTime;
+        }
     }
 
     void UpdateAimingLayer()

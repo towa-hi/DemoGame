@@ -956,14 +956,17 @@ MonoBehaviour:
   maxWalkingSpeed: 2
   mouseSensitivity: 30
   ainAnimationSpeed: 10
+  gravityVector: {x: 0, y: -9.8, z: 0}
+  maxJumpHeight: 1
   movementInputDir: {x: 0, y: 0}
   mouseInput: {x: 0, y: 0}
   animationWalkingVelocity: {x: 0, y: 0, z: 0}
   cameraHorizontalRotation: 0
   cameraVerticalRotation: 0
   intendedWalkingVector: {x: 0, y: 0, z: 0}
-  gravityVector: {x: 0, y: 0, z: 0}
+  jumpingVector: {x: 0, y: 0, z: 0}
   isAiming: 0
+  isJumping: 0
 --- !u!143 &622613248
 CharacterController:
   m_ObjectHideFlags: 0
