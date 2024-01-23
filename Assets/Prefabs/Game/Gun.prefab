@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6541384515319633259}
   - component: {fileID: 7013519250054012218}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Handle Cube
   m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 8287104026602466934}
   - component: {fileID: 3732018404663024407}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Body Cube
   m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -447,9 +447,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8143baf24f875c48ad7ebf134053b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laser: {fileID: 8791219052282476369}
   gunBarrel: {fileID: 8856646945781353098}
   audioSource: {fileID: 2331898799930198221}
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
+  projectile: {fileID: 7568874998834569227, guid: 0570e2b76dbf3bb49b178a5ae2f49ceb, type: 3}
+  projectileSpeed: 55
 --- !u!82 &2331898799930198221
 AudioSource:
   m_ObjectHideFlags: 0
@@ -462,7 +466,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 66dbbd9a357551b46a4215356f1638df, type: 3}
   m_Resource: {fileID: 8300000, guid: 66dbbd9a357551b46a4215356f1638df, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

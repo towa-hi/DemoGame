@@ -93,12 +93,19 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
-        input.PlayerControls.Enable();
+        if (input != null)
+        {
+            input.PlayerControls.Enable();
+        }
+        
     }
     
     void OnDisable()
     {
-        input.PlayerControls.Disable();
+        if (input != null)
+        {
+            input.PlayerControls.Disable();
+        }
     }
 
     void Start()
@@ -184,7 +191,7 @@ public class PlayerController : MonoBehaviour
         float newWeight = Mathf.Lerp(currentAimingLayerWeight, targetWeight, ainAnimationSpeed * Time.deltaTime);
         animator.SetLayerWeight(1, newWeight);
         
-        isAimed = newWeight >= 0.9f;
+        isAimed = newWeight >= 0.95f;
     }
 
     void UpdateGun()

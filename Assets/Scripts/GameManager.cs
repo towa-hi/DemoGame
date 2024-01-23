@@ -9,8 +9,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     
     public Dictionary<string, CharacterData> characterData;
-    
     public PlayerController playerController;
+    
+    
     void Awake()
     {
         if (instance == null)
@@ -44,6 +45,17 @@ public class GameManager : MonoBehaviour
     public void StartGame(CharacterSelectionState characterSelectionState)
     {
         // start game
+        
+    }
+
+    public GameObject GetFromPool()
+    {
+        return null;
+    }
+
+    public void SendToPool(GameObject sentObject)
+    {
+        
     }
 }
 [System.Serializable]
