@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     
     public Dictionary<string, CharacterData> characterData;
-    public PlayerController playerController;
     
     
     void Awake()
@@ -29,35 +28,14 @@ public class GameManager : MonoBehaviour
         characterData = Utilities.GetCharacterDataFromJson();
         Debug.Log("GameManager loaded characterData");
     }
-    void Start()
-    {
-
-    }
-
-
-    public static List<CharacterData> GetCharacterDataFromJson()
-    {
-        List<CharacterData> characterList = new List<CharacterData>();
-        
-        return characterList;
-    }
 
     public void StartGame(CharacterSelectionState characterSelectionState)
     {
         // start game
         
     }
-
-    public GameObject GetFromPool()
-    {
-        return null;
-    }
-
-    public void SendToPool(GameObject sentObject)
-    {
-        
-    }
 }
+
 [System.Serializable]
 public class CharacterData
 {

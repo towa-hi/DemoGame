@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using NUnit.Framework.Internal;
 using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -196,7 +195,7 @@ public class PlayerController : MonoBehaviour
 
     void UpdateGun()
     {
-        laser.EnableLaser(isAimed);
+        //laser.EnableLaser(isAimed);
 
     }
     

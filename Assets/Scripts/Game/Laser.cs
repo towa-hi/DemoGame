@@ -14,7 +14,6 @@ public class Laser : MonoBehaviour
         {
             laserEnabled = isEnabled;
             lineRenderer.enabled = isEnabled;
-            Debug.Log(isEnabled);
         }
     }
     

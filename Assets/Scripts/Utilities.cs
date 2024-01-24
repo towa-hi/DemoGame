@@ -7,16 +7,18 @@ using UnityEngine;
 using SimpleJSON;
 public class Utilities
 {
-    static readonly string characterDataPath = Path.Combine(Application.dataPath, "Data/CharacterData.json");
     public static Dictionary<string, CharacterData> GetCharacterDataFromJson()
     {
         Dictionary<string, CharacterData> characterDictionary = new Dictionary<string, CharacterData>();
-        if (!File.Exists(characterDataPath))
+        
+        TextAsset textAsset = Resources.Load<TextAsset>("Data/CharacterData");
+        if (textAsset == null)
         {
+            Debug.LogError("CharacterData.json not found in Resources/Data/");
             return characterDictionary;
         }
 
-        string dataString = File.ReadAllText(characterDataPath);
+        string dataString = textAsset.text;
         var n = JSON.Parse(dataString);
         foreach ((string key, JSONNode value) in n)
         {

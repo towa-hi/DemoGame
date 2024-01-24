@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class UICharacterSelection : MonoBehaviour
 {
+    [SerializeField] public UIMenuManager menuManager;
+    
     public Transform characterList;
     public GameObject characterEntryPrefab;
     
@@ -63,12 +65,12 @@ public class UICharacterSelection : MonoBehaviour
 
     public void OnStartButtonClicked()
     {
-        FinishSelectionAndStartGame();
+        menuManager.StartGame();
     }
 
     public void OnBackButtonClicked()
     {
-        // return to prev screen
+        menuManager.OpenMainMenu();
     }
     
     void SelectCharacter(CharacterData characterData)
