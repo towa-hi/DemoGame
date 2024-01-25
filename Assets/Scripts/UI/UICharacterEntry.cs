@@ -37,13 +37,19 @@ public class UICharacterEntry : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        audioSource.PlayOneShot(hoverClip);
+        if (!isSelected)
+        {
+            audioSource.PlayOneShot(hoverClip, 0.2f);
+        }
     }
     
     public void SelectEntry(bool selected)
     {
         isSelected = selected;
         button.interactable = !selected;
-        audioSource.PlayOneShot(selectClip);
+        if (selected)
+        {
+            audioSource.PlayOneShot(selectClip);
+        }
     }
 }

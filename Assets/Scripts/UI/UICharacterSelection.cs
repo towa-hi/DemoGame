@@ -14,6 +14,8 @@ public class UICharacterSelection : MonoBehaviour
     
     [SerializeField] Button backButton;
     [SerializeField] Button playButton;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip buttonClip;
     
     public Image selectedCharacterImage;
     public TextMeshProUGUI selectedCharacterName;
@@ -23,11 +25,16 @@ public class UICharacterSelection : MonoBehaviour
     
     void Start()
     {
+        Reset();
+    }
+
+    public void Reset()
+    {
         state = new CharacterSelectionState();
         InitializeCharacterList();
         RefreshView();
     }
-
+    
     void OnDestroy()
     {
         // unsub entries (they should be getting deleted anyways)
@@ -65,11 +72,13 @@ public class UICharacterSelection : MonoBehaviour
 
     public void OnStartButtonClicked()
     {
+        audioSource.PlayOneShot(buttonClip);
         menuManager.StartGame();
     }
 
     public void OnBackButtonClicked()
     {
+        audioSource.PlayOneShot(buttonClip);
         menuManager.OpenMainMenu();
     }
     

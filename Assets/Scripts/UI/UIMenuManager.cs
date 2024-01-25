@@ -16,6 +16,7 @@ public class UIMenuManager : MonoBehaviour
     {
         mainMenu.gameObject.SetActive(false);
         characterSelection.gameObject.SetActive(true);
+        characterSelection.Reset();
     }
 
     public void OpenMainMenu()

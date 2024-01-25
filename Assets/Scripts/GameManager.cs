@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using Lean.Localization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +10,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     
     public Dictionary<string, CharacterData> characterData;
-    
     
     void Awake()
     {
@@ -33,6 +33,11 @@ public class GameManager : MonoBehaviour
     {
         // start game
         
+    }
+
+    public void ChangeLanguage(string language)
+    {
+        LeanLocalization.SetCurrentLanguageAll(language);
     }
 }
 

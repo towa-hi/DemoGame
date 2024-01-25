@@ -12,7 +12,7 @@ public class UIMainMenu : MonoBehaviour
 
     }
 
-    public void OnBackButton()
+    public void OnQuitButton()
     {
         menuManager.OpenMainMenu();
     }
@@ -20,5 +20,15 @@ public class UIMainMenu : MonoBehaviour
     public void OnCharacterSelectButton()
     {
         menuManager.OpenCharacterSelection();
+    }
+
+    public void OnLanguageENButton()
+    {
+        GameManager.instance.ChangeLanguage("English");
+    }
+
+    public void OnLanguageJPButton()
+    {
+        GameManager.instance.ChangeLanguage("Japanese");
     }
 }
