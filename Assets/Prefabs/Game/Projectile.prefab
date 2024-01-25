@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 3110998947135432538}
   - component: {fileID: 1665650727735525123}
   - component: {fileID: 787594461332792599}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Projectile
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitAudio: {fileID: 787594461332792599}
   hitClip: {fileID: 8300000, guid: 5dae27a23d1dd3b49af724323e0b35ab, type: 3}
+  targetHitClip: {fileID: 8300000, guid: ff6eed391454f794ba601f4c7d3a2cfb, type: 3}
   holePrefab: {fileID: 1395452603019780477, guid: 3d8c86663410f0142a9f389d9779ce42, type: 3}
 --- !u!33 &1260304308148033840
 MeshFilter:
@@ -135,8 +136,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5dae27a23d1dd3b49af724323e0b35ab, type: 3}
-  m_Resource: {fileID: 8300000, guid: 5dae27a23d1dd3b49af724323e0b35ab, type: 3}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.405
   m_Pitch: 1
@@ -232,7 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8256393437054245700}
   - component: {fileID: 2281680001194922531}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

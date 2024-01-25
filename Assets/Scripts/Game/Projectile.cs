@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour
     float lifetime = 5f;
     [SerializeField] AudioSource hitAudio;
     [SerializeField] AudioClip hitClip;
+    [SerializeField] AudioClip targetHitClip;
     [SerializeField] GameObject holePrefab;
     bool hasLanded;
     GameObject hole;
@@ -20,7 +21,6 @@ public class Projectile : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Log("on enable");
         StartCoroutine(DeactivateAfterLifetime());
     }
 
@@ -37,14 +37,22 @@ public class Projectile : MonoBehaviour
         {
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit hit;
-            
+            int layerMask = 1 << LayerMask.NameToLayer("Projectile");
+            layerMask = ~layerMask;
             // look ahead one frame to add bullet hole
-            if (Physics.Raycast(ray, out hit, moveDistance))
+            if (Physics.Raycast(ray, out hit, moveDistance, layerMask))
             {
                 // on hit
-                hitAudio.PlayOneShot(hitClip);
+                if (hit.collider.gameObject.GetComponent<TargetHitDetector>())
+                {
+                    hitAudio.PlayOneShot(targetHitClip, 2);
+                }
+                else
+                {
+                    hitAudio.PlayOneShot(hitClip, 0.5f);
+                }
+                
                 CreateBulletHole(hit);
-                Debug.Log("hit");
                 hasLanded = true;
                 transform.position = hit.point;
                 SendToPool();
@@ -63,13 +71,8 @@ public class Projectile : MonoBehaviour
 
     void CreateBulletHole(RaycastHit hit)
     {
-        // Instantiate the hole prefab at the hit point
         hole = Instantiate(holePrefab, hit.point, Quaternion.identity);
-
-        // Align the hole prefab's up vector with the hit normal
         hole.transform.up = hit.normal;
-
-        // Slightly offset the decal to prevent z-fighting
         hole.transform.position += hole.transform.up * 0.01f;
     }
 }

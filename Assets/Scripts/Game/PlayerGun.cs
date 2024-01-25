@@ -12,6 +12,9 @@ public class PlayerGun : MonoBehaviour
 
     [Header("CONFIGURABLE PROPERTIES")] 
     [SerializeField] float projectileSpeed;
+
+    [SerializeField] GameObject muzzleFlashSprite;
+    Coroutine muzzleFlashRoutine;
     
     public void Shoot()
     {
@@ -41,6 +44,19 @@ public class PlayerGun : MonoBehaviour
         // Initialize the projectile's speed
         Projectile projectileScript = projectileInstance.GetComponent<Projectile>();
         projectileScript.Initialize(projectileSpeed);
+        if (muzzleFlashRoutine != null)
+        {
+            StopCoroutine(muzzleFlashRoutine);
+        }
+
+        muzzleFlashRoutine = StartCoroutine(MuzzleFlashRoutine());
     }
-    
+
+    IEnumerator MuzzleFlashRoutine()
+    {
+        muzzleFlashSprite.SetActive(true);
+        float duration = 0.1f;
+        yield return new WaitForSeconds(duration);
+        muzzleFlashSprite.SetActive(false);
+    }
 }

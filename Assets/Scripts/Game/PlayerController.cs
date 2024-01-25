@@ -237,7 +237,6 @@ public class PlayerController : MonoBehaviour
     {
         if (isAimed)
         {
-            Debug.Log("SCHOOT");
             gun.Shoot();
         }
         

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class ThirdPersonCameraController : MonoBehaviour
@@ -11,6 +12,10 @@ public class ThirdPersonCameraController : MonoBehaviour
     [SerializeField] Animator animator;
 
     [SerializeField] Transform cameraOrigin;
+    [SerializeField] CinemachineVirtualCamera virtualCamera;
+    
+    [SerializeField] float defaultFOV;
+    [SerializeField] float aimFOV;
 
     Vector2 defaultCrosshairSize = new Vector2(50, 50);
     Vector2 focusedCrosshairSize = new Vector2(25, 25);
@@ -18,19 +23,18 @@ public class ThirdPersonCameraController : MonoBehaviour
     
     void Update()
     {
-        // Get the weight of the aiming layer
         float aimingWeight = animator.GetLayerWeight(1);
 
-        // Interpolate between defaultOffset and aimingOffset based on aimingWeight
+        // lerp offset
         Vector3 currentOffset = Vector3.Lerp(defaultOffset, aimingOffset, aimingWeight);
-
-        // Set the local position of the cameraOrigin
         cameraOrigin.localPosition = currentOffset;
 
-        // Interpolate the size of the crosshair
+        // lerp crosshair
         Vector2 currentCrosshairSize = Vector2.Lerp(defaultCrosshairSize, focusedCrosshairSize, aimingWeight);
-
-        // Apply the interpolated size to the crosshairPanel
         crosshairPanel.sizeDelta = currentCrosshairSize;
+        
+        // lerp FOV
+        virtualCamera.m_Lens.FieldOfView = Mathf.Lerp(defaultFOV, aimFOV, aimingWeight);
+
     }
 }

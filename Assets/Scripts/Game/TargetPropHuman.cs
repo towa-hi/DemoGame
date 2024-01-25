@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class TargetPropHuman : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    void OnHit(string bodyPart)
     {
-        
+        if (bodyPart == "head")
+        {
+            Debug.Log("hit head");
+        }
+        else if (bodyPart == "body")
+        {
+            Debug.Log("hit body");
+        }
     }
 }
