@@ -7912,13 +7912,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064f99bbcee5ec5489dad6065bcf2836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivated: 0
   menuManager: {fileID: 0}
   characterList: {fileID: 0}
   characterEntryPrefab: {fileID: 0}
   backButton: {fileID: 0}
   playButton: {fileID: 0}
-  audioSource: {fileID: 0}
-  buttonClip: {fileID: 0}
   selectedCharacterImage: {fileID: 0}
   selectedCharacterName: {fileID: 0}
 --- !u!1 &1590780567
@@ -10172,8 +10171,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548400906ea707646a10d042c40b61f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenu: {fileID: 618969599}
-  characterSelection: {fileID: 835156038}
+  mainMenuPanel: {fileID: 618969599}
+  characterSelectionPanel: {fileID: 835156038}
+  currentPanel: {fileID: 0}
+  allPanels: []
 --- !u!1 &1948198858
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,23 +5,42 @@ using UnityEngine.SceneManagement;
 
 public class UIMenuManager : MonoBehaviour
 {
-    [SerializeField] UIMainMenu mainMenu;
-    [SerializeField] UICharacterSelection characterSelection;
+    [Header("REQUIRED")]
+    [SerializeField] UIMainMenu mainMenuPanel;
+    [SerializeField] UICharacterSelection characterSelectionPanel;
+    [Header("STATE")]
+    [SerializeField] UIMenuPanel currentPanel;
+    [SerializeField] List<UIMenuPanel> allPanels;
+    
     void Awake()
     {
-        mainMenu.gameObject.SetActive(true);
+        allPanels = new List<UIMenuPanel>();
+        UIMenuPanel[] panels = GetComponentsInChildren<UIMenuPanel>();
+        foreach (UIMenuPanel panel in panels)
+        {
+            allPanels.Add(panel);
+        }
+        SetCurrentPanel(mainMenuPanel);
     }
 
+    void SetCurrentPanel(UIMenuPanel newPanel)
+    {
+        if (currentPanel)
+        {
+            currentPanel.Activate(false);
+        }
+        currentPanel = newPanel;
+        newPanel.Activate(true);
+
+    }
+    
     public void OpenCharacterSelection()
     {
-        mainMenu.gameObject.SetActive(false);
-        characterSelection.gameObject.SetActive(true);
-        characterSelection.Reset();
+        SetCurrentPanel(characterSelectionPanel);
     }
 
     public void OpenMainMenu()
     {
-        mainMenu.gameObject.SetActive(true);
-        characterSelection.gameObject.SetActive(false);
+        SetCurrentPanel(mainMenuPanel);
     }
 }

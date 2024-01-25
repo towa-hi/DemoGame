@@ -5,30 +5,29 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UICharacterSelection : MonoBehaviour
+public class UICharacterSelection : UIMenuPanel
 {
-    [SerializeField] public UIMenuManager menuManager;
-    
-    public Transform characterList;
-    public GameObject characterEntryPrefab;
-    
+    [Header("REQUIRED")]
+    [SerializeField] UIMenuManager menuManager;
+    [SerializeField] Transform characterList;
+    [SerializeField] GameObject characterEntryPrefab;
     [SerializeField] Button backButton;
     [SerializeField] Button playButton;
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip buttonClip;
-    
-    public Image selectedCharacterImage;
-    public TextMeshProUGUI selectedCharacterName;
-
+    [SerializeField] Image selectedCharacterImage;
+    [SerializeField] TextMeshProUGUI selectedCharacterName;
+    // state
     CharacterSelectionState state;
 
-    
-    void Start()
+    public override void Activate(bool isActivated)
     {
-        Reset();
+        base.Activate(isActivated);
+        if (isActivated)
+        {
+            Reset();
+        }
     }
 
-    public void Reset()
+    void Reset()
     {
         state = new CharacterSelectionState();
         InitializeCharacterList();
@@ -65,7 +64,7 @@ public class UICharacterSelection : MonoBehaviour
         }
     }
     
-    public void OnEntryClicked(UICharacterEntry entry)
+    void OnEntryClicked(UICharacterEntry entry)
     {
         SelectCharacter(entry.characterData);
     }

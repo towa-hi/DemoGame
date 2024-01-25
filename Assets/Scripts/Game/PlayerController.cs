@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("GUN PROPERTIES")] 
     [SerializeField] PlayerGun gun;
-    [SerializeField] Laser laser;
     [Header("CONFIGURABLE MOVEMENT PROPERTIES")]
     [SerializeField] float defaultWalkingVelocity;
     [SerializeField] float walkingAnimationBrakingFactor;
@@ -127,7 +126,6 @@ public class PlayerController : MonoBehaviour
         UpdatePlayerRotationAndCamera(); // transform.localRotation and cameraOrigin.localRotation set
         UpdateWalkingAnimation(); // animationWalkingVelocity set
         UpdateAimingLayer(); // animator aiming layer weight, isAiming and isAimed set
-        UpdateGun();
         UpdateMovePlayer(); // intendedWalkingVector set (lateral movement)
         UpdateJumping(); // jumpingVector set (vertical movement)
         finalMovementVector = intendedWalkingVector + jumpingVector;
@@ -165,7 +163,6 @@ public class PlayerController : MonoBehaviour
 
     void UpdateWalkingAnimation()
     {
-        
         // apply acceleration when there is input or deceleration if no input
         if (movementInputDir != Vector2.zero)
         {
@@ -186,26 +183,17 @@ public class PlayerController : MonoBehaviour
     {
         float currentAimingLayerWeight = animator.GetLayerWeight(1);
         float targetWeight = isAiming ? 1.0f : 0.0f;
-        
         float newWeight = Mathf.Lerp(currentAimingLayerWeight, targetWeight, ainAnimationSpeed * Time.deltaTime);
         animator.SetLayerWeight(1, newWeight);
-        
         isAimed = newWeight >= 0.95f;
     }
 
-    void UpdateGun()
-    {
-        //laser.EnableLaser(isAimed);
-
-    }
-    
     void UpdateMovePlayer()
     {
-        // calculate the forward and right direction relative to the player
+        // calculate the forward and right direction relative to the player and multiply by input
         Vector3 forward = new Vector3(transform.forward.x, 0f, transform.forward.z);
         Vector3 right = new Vector3(transform.right.x, 0f, transform.right.z);
         Vector3 relativeDir = (forward * movementInputDir.y + right * movementInputDir.x).normalized;
-        // apply the movement to the character
         intendedWalkingVector = relativeDir * defaultWalkingVelocity;
     }
 
@@ -217,18 +205,17 @@ public class PlayerController : MonoBehaviour
             jumpingVector.y = -9.8f;
         }
 
-        // Jump
+        // jump
         if (isGrounded && isJumping)
         {
             jumpingVector.y = Mathf.Sqrt(maxJumpHeight * -2 * gravity);
             isJumping = false;
         }
-
-        // Apply gravity only when not grounded
+        
         if (!isGrounded)
         {
             float fallMultiplier = 2f;
-            // Apply a stronger gravity force when falling down
+            // apply a stronger gravity force when falling down
             jumpingVector.y += gravity * (jumpingVector.y < 0 ? fallMultiplier : 1) * Time.deltaTime;
         }
     }
@@ -239,19 +226,14 @@ public class PlayerController : MonoBehaviour
         {
             gun.Shoot();
         }
-        
     }
-
     
     void OnDrawGizmos()
     {
         Gizmos.color = isGrounded ? Color.green : Color.red;
-        
-        // Draw a sphere at the ground check position with the specified radius
+        // draw a sphere at the ground check position with the specified radius
         Gizmos.DrawWireSphere(groundCheckOrigin.position, groundCheckRadius);
-
-        // Draw a line to visualize ground distance
+        // draw a line to visualize ground distance
         Gizmos.DrawLine(groundCheckOrigin.position, groundCheckOrigin.position + Vector3.down * groundDistance);
-
     }
 }
