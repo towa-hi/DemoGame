@@ -24,9 +24,4 @@ public class UIMenuManager : MonoBehaviour
         mainMenu.gameObject.SetActive(true);
         characterSelection.gameObject.SetActive(false);
     }
-
-    public void StartGame()
-    {
-        SceneManager.LoadScene("GameScene");
-    }
 }

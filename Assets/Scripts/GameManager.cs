@@ -31,8 +31,22 @@ public class GameManager : MonoBehaviour
 
     public void StartGame(CharacterSelectionState characterSelectionState)
     {
-        // start game
+        StartCoroutine(StartGameCoroutine(characterSelectionState));
+    }
+
+    IEnumerator StartGameCoroutine(CharacterSelectionState characterSelectionState)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameScene");
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
         
+        HUDController hud = FindObjectOfType<HUDController>(); // Replace GUI with your actual GUI component type
+        if (hud != null)
+        {
+            hud.SetImage(characterSelectionState.selectedCharacter.GetSprite());
+        }
     }
 
     public void ChangeLanguage(string language)

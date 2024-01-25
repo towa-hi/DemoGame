@@ -72,13 +72,11 @@ public class UICharacterSelection : MonoBehaviour
 
     public void OnStartButtonClicked()
     {
-        audioSource.PlayOneShot(buttonClip);
-        menuManager.StartGame();
+        GameManager.instance.StartGame(state);
     }
 
     public void OnBackButtonClicked()
     {
-        audioSource.PlayOneShot(buttonClip);
         menuManager.OpenMainMenu();
     }
     
@@ -113,12 +111,4 @@ public class UICharacterSelection : MonoBehaviour
         }
     }
 
-    void FinishSelectionAndStartGame()
-    {
-        if (state.selectedCharacter == null)
-        {
-            throw new Exception("characterData was not selected");
-        }
-        GameManager.instance.StartGame(state);
-    }
 }
